@@ -1,0 +1,42 @@
+El ejercicio será así: github.com/quifersa/ejercicioweb
+
+PRÁCTICA APLICACIÓN WEB CON JEE
+
+Crear una aplicación de gestión web para una empresa/negocio o similiar.
+
+La aplicación estará basada en 3 tablas:
+
+tabla_administradores:
++ login (primary)
++ pass
+
+tabla_clientes:
++ nombre
++ calle
++ número
++ código postal
++ población
++ teléfono
++ correo electrónico
++ particular_empresa
+
+tabla_producto (mínimo 7 campos)
+Los usuarios que quieran acceder a la gestión de las informaciones de las tablas (a excepción
+de la de administradores) deberán identificarse previamente insertando su login y pass de
+administrador. Una vez identificados podrán listar, editar, borrar y crear informaciones de
+las tablas indicadas usando formularios web y listados como se ha enseñado en clase.
+
+Todos los campos de los formularios deben ser validados en servidor cumpliendo un tamaño mínimo y
+máximo, y un formato acorde a elegir por el programador.
+
+Todas las partes de la aplicación deben estar protegidas de forma que si un usuario no se ha
+identificado como administrador correctamente no pueda acceder a ninguna de ellas.
+
+Opcionales:
+
+1 - Agregar validaciones por Javascript
+2 - Sustituir hasta 3 campos de entrada en los formularios, por campos no enseñados en
+clase: p. ej.: checkbox, desplegables (select), radio buttons, etc.
+3 - Mejoras visuales usando CSS, HTML5, Javascript y/o librerías o motores generadores de
+(como BootStrap)
+4 - Incorporar una subida de archivo en el formulario de registro del dato elegido
