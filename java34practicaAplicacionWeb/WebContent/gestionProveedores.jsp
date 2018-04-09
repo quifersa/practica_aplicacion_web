@@ -30,6 +30,7 @@
 		Ámbito de la actividad: ${proveedor.ambitoActividad} <br/>
 		Certificado del Ministerio de Industria: ${proveedor.certificadoMinisterioIndustria} <br/>
 		Estructura jurídica: ${proveedor.estructuraJuridica} <br/>
+		Imagen del logotipo: <img src="${proveedor.rutaImagenLogo}" height="200"/> <br/>
 		<a href="ServletBorrarProveedor?id=${proveedor.id}"> BORRAR </a> &nbsp;
 		<a href="ServletEditarProveedor?id=${proveedor.id}"> EDITAR </a>
 	</div>

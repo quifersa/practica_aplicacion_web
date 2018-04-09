@@ -27,9 +27,13 @@ Introduce los datos del proveedor: <br/>
 <div style="color: red"> ${mensajeErrorWeb} </div>
 <div style="color: red"> ${mensajeErrorNombreRepresentante} </div>
 <div style="color: red"> ${mensajeErrorTelefonoRepresentante} </div>
+<div style="color: red"> ${mensajeErrorAmbitoActividad} </div>
+<div style="color: red"> ${mensajeErrorCertificadoMinisterioIndustria} </div>
+<div style="color: red"> ${mensajeErrorEstructuraJuridica} </div>
 
 
-<form action="ServletGuardarCambiosProveedor" method="post">
+<form action="ServletGuardarCambiosProveedor" method="post" enctype="multipart/form-data" 
+		onsubmit="validarFormularioRegistroProveedor()">
 	Nombre de la empresa: <input type="text" name="campoNombreEmpresa" 
 		value="${proveedorAEditar.nombreEmpresa}"/> <br/>
 	Dirección: <input type="text" name="campoDireccion" 
@@ -53,9 +57,19 @@ Introduce los datos del proveedor: <br/>
 	          <option value="Empresa conjunta">Empresa conjunta</option>
 	          <option value="Sociedad Limitada">Sociedad Limitada</option>
 	          <option value="Sociedad Anónima">Sociedad Anónima</option> </select> <br/>
+	Imagen del logotipo: <input type="file" id="idCampoImagenLogo" name="campoImagenLogo"
+				value="${proveedorAEditar.rutaImagenLogo}" hidden/>
+			<input type="text" id="idTextoImagenLogo" 
+				value="${proveedorAEditar.rutaImagenLogo}"/> <br/>			
 	<input type="hidden" name="campoId" value="${proveedorAEditar.id}"/> <br/>
-	<input type="submit" value="GUARDAR CAMBIOS"/>
-</form>
+	<input type="submit" value="GUARDAR CAMBIOS"/> <br/>
+</form> <br/>
+
+<button id="botonModificar" 
+			onclick="accionBotonModificar();">Modificar imagen</button> <br/>
+
+<script type="text/javascript" src="js/validacionRegistrarProveedor.js"></script>
+<script type="text/javascript" src="js/modificarImagen.js"></script>
 
 </body>
 </html>

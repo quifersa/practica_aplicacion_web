@@ -6,6 +6,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import utilidades.GestorArchivos;
+
+import com.mysql.jdbc.Statement;
+
 import modelo.Proveedor;
 import daos.ProveedoresDAO;
 import daos.ConstantesSQL;
@@ -17,7 +21,8 @@ public class ProveedoresDAOImpl extends GenericDAO implements ProveedoresDAO{
 	public void registrarProveedor(Proveedor proveedor) {
 		conectar();
 		try {
-			PreparedStatement ps = miConexion.prepareStatement(ConstantesSQL.INSERTAR_PROVEEDOR);
+			PreparedStatement ps = miConexion.prepareStatement(ConstantesSQL.INSERTAR_PROVEEDOR,
+					Statement.RETURN_GENERATED_KEYS);
 			
 			ps.setString(1, proveedor.getNombreEmpresa());
 			ps.setString(2, proveedor.getDireccion());
@@ -31,6 +36,15 @@ public class ProveedoresDAOImpl extends GenericDAO implements ProveedoresDAO{
 			ps.setString(10, proveedor.getEstructuraJuridica());
 
 			ps.execute();
+			ResultSet rs = ps.getGeneratedKeys();
+			if (rs.next()) {
+				int idGenerado = rs.getInt(1);
+				System.out.println("id generado en bd: " + idGenerado);
+			  // Guardar la imagen del producto en una carpeta nombrada con el mismo id generado
+				GestorArchivos.guardarArchivo(proveedor.getImagenLogoSubida(),idGenerado+".jpg");
+			}
+			
+			rs.close();
 			ps.close();
 			
 			System.out.println("El proveedor se ha registrado correctamente");
@@ -40,6 +54,7 @@ public class ProveedoresDAOImpl extends GenericDAO implements ProveedoresDAO{
 			e.printStackTrace();
 		}
 		
+		desconectar();
 	}
 	
 	@Override
@@ -63,9 +78,11 @@ public class ProveedoresDAOImpl extends GenericDAO implements ProveedoresDAO{
 				proveedor.setCertificadoMinisterioIndustria(rs.getString
 						("certificado_ministerio_industria"));
 				proveedor.setEstructuraJuridica(rs.getString("estructura_juridica"));
+				proveedor.setRutaImagenLogo(GestorArchivos.rutaArchivo(rs.getInt("id")));
 				proveedor.setId(rs.getInt("id"));
 				proveedores.add(proveedor);
 			}
+			rs.close();
 			ps.close();
 		} catch (SQLException e) {
 			System.out.println("sql select proveedores está mal");
@@ -84,6 +101,9 @@ public class ProveedoresDAOImpl extends GenericDAO implements ProveedoresDAO{
 		   PreparedStatement ps = miConexion.prepareStatement(ConstantesSQL.BORRAR_PROVEEDOR);
 		   ps.setInt(1, id);
 		   ps.execute();
+		   
+		   GestorArchivos.borrarArchivo(id+".jpg");
+
 		   ps.close();
 		} catch (SQLException e) {
 		   System.out.println("La sql de borrado está mal");
@@ -119,6 +139,7 @@ public class ProveedoresDAOImpl extends GenericDAO implements ProveedoresDAO{
 				proveedor.setCertificadoMinisterioIndustria(resultado.getString
 						("certificado_ministerio_industria"));
 				proveedor.setEstructuraJuridica(resultado.getString("estructura_juridica"));
+				proveedor.setRutaImagenLogo(GestorArchivos.rutaArchivo(resultado.getInt("id")));
 				proveedor.setId(resultado.getInt("id"));
 			}
 			ps.close();
@@ -149,7 +170,18 @@ public class ProveedoresDAOImpl extends GenericDAO implements ProveedoresDAO{
 			ps.setString(10, proveedor.getEstructuraJuridica());
 			ps.setInt(11, proveedor.getId());
 			ps.execute();
+
+			ResultSet rs = ps.getGeneratedKeys();
+			if (rs.next()) {
+				int idGenerado = rs.getInt(1);
+				System.out.println("id generado en bd: " + idGenerado);
+			  // Guardar la imagen del producto en una carpeta nombrada con el mismo id generado
+				GestorArchivos.guardarArchivo(proveedor.getImagenLogoSubida(),idGenerado+".jpg");
+			}
+			
+			rs.close();
 			ps.close();
+			
 		} catch (SQLException e) {
 			System.out.println("Posiblemente la sql de guardar cambios esté mal");
 			System.out.println(e.getMessage());

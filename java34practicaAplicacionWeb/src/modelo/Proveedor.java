@@ -1,5 +1,7 @@
 package modelo;
 
+import javax.servlet.http.Part;
+
 public class Proveedor {
 	
 	private String nombreEmpresa;
@@ -12,18 +14,19 @@ public class Proveedor {
 	private String ambitoActividad;
 	private String certificadoMinisterioIndustria;
 	private String estructuraJuridica;
+	private Part imagenLogoSubida;
+	private String rutaImagenLogo;
 	private int id;
 	
 	public Proveedor() {
 
 	}
-
+	
 	public Proveedor(String nombreEmpresa, String direccion, String telefono,
 			String correoElectronico, String paginaWeb,
 			String nombreRepresentante, String telefonoRepresentante,
 			String ambitoActividad, String certificadoMinisterioIndustria,
-			String estructuraJuridica) {
-		
+			String estructuraJuridica, Part imagenLogoSubida) {
 		this.nombreEmpresa = nombreEmpresa;
 		this.direccion = direccion;
 		this.telefono = telefono;
@@ -34,8 +37,9 @@ public class Proveedor {
 		this.ambitoActividad = ambitoActividad;
 		this.certificadoMinisterioIndustria = certificadoMinisterioIndustria;
 		this.estructuraJuridica = estructuraJuridica;
-		
+		this.imagenLogoSubida = imagenLogoSubida;
 	}
+
 
 	public String getNombreEmpresa() {
 		return nombreEmpresa;
@@ -128,6 +132,24 @@ public class Proveedor {
 		this.id = id;
 	}
 
+	public Part getImagenLogoSubida() {
+		return imagenLogoSubida;
+	}
+
+	public void setImagenLogoSubida(Part imagenLogoSubida) {
+		this.imagenLogoSubida = imagenLogoSubida;
+	}
+	
+
+	public String getRutaImagenLogo() {
+		return rutaImagenLogo;
+	}
+
+	public void setRutaImagenLogo(String rutaImagenLogo) {
+		this.rutaImagenLogo = rutaImagenLogo;
+	}
+	
+
 	@Override
 	public String toString() {
 		return "Proveedor [nombre empresa=" + nombreEmpresa + ", dirección="
@@ -138,7 +160,7 @@ public class Proveedor {
 				+ ", ámbito actividad=" + ambitoActividad
 				+ ", certificado Ministerio Industria="
 				+ certificadoMinisterioIndustria + ", \n estructura jurídica="
-				+ estructuraJuridica + "]";
+				+ estructuraJuridica + ", imagen logotipo subida=" + imagenLogoSubida + "]";
 	}
 
 }

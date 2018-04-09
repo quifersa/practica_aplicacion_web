@@ -5,20 +5,23 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 import daos.ProveedoresDAO;
 import daosImpl.ProveedoresDAOImpl;
 import modelo.Proveedor;
 
 @WebServlet("/ServletGuardarCambiosProveedor")
+@MultipartConfig
 public class ServletGuardarCambiosProveedor extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	protected void service(HttpServletRequest request, HttpServletResponse response) 
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
 		
 		if(request.getSession().getAttribute("admin") == null){
@@ -41,6 +44,7 @@ public class ServletGuardarCambiosProveedor extends HttpServlet {
 			certificadoMinisterioIndustria = request.getParameter("campoCertificado");
 		}
 		String estructuraJuridica = request.getParameter("campoEstructuraJuridica");
+		Part imagenLogo = request.getPart("campoImagenLogo");
 		String id = request.getParameter("campoId");
 		
 		// Validamos los datos
@@ -131,11 +135,52 @@ public class ServletGuardarCambiosProveedor extends HttpServlet {
 			request.getRequestDispatcher("registrarProveedor.jsp").forward(request, response);
 			return;
 		}	
+		
+		String expresionRegularAmbitoActividad= "Nacional|Internacional";
+		Pattern pattern8 = Pattern.compile(expresionRegularAmbitoActividad);
+		Matcher matcher8 = pattern8.matcher(ambitoActividad);
+		if(matcher8.matches()){
+			System.out.println("Ámbito actividad válido");
+		} else{
+			System.out.println("Ámbito actividad no válido");
+			request.setAttribute("mensajeErrorAmbitoActividad", 
+					"Ámbito actividad no válido");
+			request.getRequestDispatcher("registrarProveedor.jsp").forward(request, response);
+			return;
+		}	
+		
+		String expresionRegularCertificadoMinisterioIndustria= "Sí|No";
+		Pattern pattern9 = Pattern.compile(expresionRegularCertificadoMinisterioIndustria);
+		Matcher matcher9 = pattern9.matcher(certificadoMinisterioIndustria);
+		if(matcher9.matches()){
+			System.out.println("Certificado Ministerio Industria válido");
+		} else{
+			System.out.println("Certificado Ministerio Industria no válido");
+			request.setAttribute("mensajeErrorCertificadoMinisterioIndustria", 
+					"Certificado Ministerio Industria no válido");
+			request.getRequestDispatcher("registrarProveedor.jsp").forward(request, response);
+			return;
+		}	
+		
+		String expresionRegularEstructuraJuridica= 
+				"Empresa conjunta|Sociedad Limitada|Sociedad Anónima";
+		Pattern pattern10 = Pattern.compile(expresionRegularEstructuraJuridica);
+		Matcher matcher10 = pattern10.matcher(estructuraJuridica);
+		if(matcher10.matches()){
+			System.out.println("Estructura jurídica válida");
+		} else{
+			System.out.println("Estructura jurídica no válida");
+			request.setAttribute("mensajeErrorEstructuraJuridica", 
+					"Estructura jurídica no válida");
+			request.getRequestDispatcher("registrarProveedor.jsp").forward(request, response);
+			return;
+		}
+		
 		// Fin validación
 		
 		Proveedor proveedor = new Proveedor(nombreEmpresa, direccion, telefono, 
 				correoElectronico, paginaWeb, nombreRepresentante, telefonoRepresentante, 
-				ambitoActividad, certificadoMinisterioIndustria, estructuraJuridica);
+				ambitoActividad, certificadoMinisterioIndustria, estructuraJuridica, imagenLogo);
 		
 		proveedor.setId(Integer.parseInt(id));
 		

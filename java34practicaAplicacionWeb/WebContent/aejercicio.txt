@@ -32,11 +32,25 @@ máximo, y un formato acorde a elegir por el programador.
 Todas las partes de la aplicación deben estar protegidas de forma que si un usuario no se ha
 identificado como administrador correctamente no pueda acceder a ninguna de ellas.
 
-Opcionales:
+OPCIONALES:
 
 1 - Agregar validaciones por Javascript
 2 - Sustituir hasta 3 campos de entrada en los formularios, por campos no enseñados en
 clase: p. ej.: checkbox, desplegables (select), radio buttons, etc.
 3 - Mejoras visuales usando CSS, HTML5, Javascript y/o librerías o motores generadores de
 (como BootStrap)
-4 - Incorporar una subida de archivo en el formulario de registro del dato elegido
+  Subida archivos:
+4 - Incorporar una subida de archivo en el formulario de registro del dato elegido. Una vez
+finalizada la práctica 2, incluir en el formulario de registro del tipo de dato elegido un campo
+tipo file donde un administrador podrá subir una imagen asociada al tipo de dato, la cual deberá
+aparecer en los listados
+5 - Permitir modificar la imagen en la parte de modificar datos
+6 - Borrar también la imagen asociada cuando se borre el registro correspondiente
+  Asosaciones:
+7 - Crear una tabla de categorías para poder asociar uno de los dos tipos de datos de la práctica
+a una categoría como se ha mostrado en los ejemplos, en el listado del tipo de dato mostrar también
+su categoría
+8 - Permitir crear, editar, listar y borrar categorías
+  Paginación:
+9 - Incluir paginación en los listados de informaciones
+10 - Incluir un buscador en los listados de informaciones

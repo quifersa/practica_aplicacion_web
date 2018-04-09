@@ -28,7 +28,8 @@ Introduce los datos del cliente: <br/>
 <div style="color: red"> ${mensajeErrorEmail} </div>
 <div style="color: red"> ${mensajeErrorParticularEmpresa} </div>
 
-<form action="ServletGuardarCambiosCliente" method="post">
+<form action="ServletGuardarCambiosCliente" method="post" 
+		onsubmit="validarFormularioRegistroCliente()">
 
 	Nombre: <input type="text" name="campoNombre" value="${clienteAEditar.nombre}"/> <br/>
 	Calle: <input type="text" name="campoCalle" value="${clienteAEditar.calle}"/> <br/>
@@ -47,5 +48,8 @@ Introduce los datos del cliente: <br/>
 	<input type="submit" value="GUARDAR CAMBIOS"/>
 
 </form>
+
+<script type="text/javascript" src="js/validacionRegistrarCliente.js"></script>
+
 </body>
 </html>

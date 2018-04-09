@@ -26,9 +26,13 @@ Introduce los datos del proveedor: <br/>
 <div style="color: red"> ${mensajeErrorWeb} </div>
 <div style="color: red"> ${mensajeErrorNombreRepresentante} </div>
 <div style="color: red"> ${mensajeErrorTelefonoRepresentante} </div>
+<div style="color: red"> ${mensajeErrorAmbitoActividad} </div>
+<div style="color: red"> ${mensajeErrorCertificadoMinisterioIndustria} </div>
+<div style="color: red"> ${mensajeErrorEstructuraJuridica} </div>
 
 
-<form action="ServletRegistroProveedor" method="post">
+<form action="ServletRegistroProveedor" method="post" enctype="multipart/form-data" 
+		onsubmit="validarFormularioRegistroProveedor()">
 	Nombre de la empresa: <input type="text" name="campoNombreEmpresa"/> <br/>
 	Dirección: <input type="text" name="campoDireccion"/> <br/>
 	Teléfono: <input type="text" name="campoTelefono"/> <br/>
@@ -45,8 +49,11 @@ Introduce los datos del proveedor: <br/>
 	          <option value="Empresa conjunta">Empresa conjunta</option>
 	          <option value="Sociedad Limitada">Sociedad Limitada</option>
 	          <option value="Sociedad Anónima">Sociedad Anónima</option> </select> <br/>
+	Imagen del logotipo: <input type="file" name="campoImagenLogo"/> <br/>
 	<input type="submit" value="REGISTRAR"/>
 </form>
+
+<script type="text/javascript" src="js/validacionRegistrarProveedor.js"></script>
 
 </body>
 </html>

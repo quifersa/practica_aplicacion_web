@@ -5,10 +5,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 import modelo.Proveedor;
 import daos.ProveedoresDAO;
@@ -16,10 +18,11 @@ import daosImpl.ProveedoresDAOImpl;
 
 
 @WebServlet("/ServletRegistroProveedor")
+@MultipartConfig
 public class ServletRegistroProveedor extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	protected void service(HttpServletRequest request, HttpServletResponse response) 
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
 		
 		if(request.getSession().getAttribute("admin") == null){
@@ -41,8 +44,8 @@ public class ServletRegistroProveedor extends HttpServlet {
 		}else {
 			certificadoMinisterioIndustria = request.getParameter("campoCertificado");
 		}
-		System.out.println(request.getParameter("campoCertificado"));
 		String estructuraJuridica = request.getParameter("campoEstructuraJuridica");
+		Part imagenLogo = request.getPart("campoImagenLogo");
 		
 		// Validamos los datos
 		String expresionRegularNombreEmpresa = "[a-zA-Z0-9.·ÈÌÛ˙¡…Õ”⁄¸‹Ò—Á«\\s]{1,70}";
@@ -132,11 +135,52 @@ public class ServletRegistroProveedor extends HttpServlet {
 			request.getRequestDispatcher("registrarProveedor.jsp").forward(request, response);
 			return;
 		}	
+		
+		String expresionRegularAmbitoActividad= "Nacional|Internacional";
+		Pattern pattern8 = Pattern.compile(expresionRegularAmbitoActividad);
+		Matcher matcher8 = pattern8.matcher(ambitoActividad);
+		if(matcher8.matches()){
+			System.out.println("¡mbito actividad v·lido");
+		} else{
+			System.out.println("¡mbito actividad no v·lido");
+			request.setAttribute("mensajeErrorAmbitoActividad", 
+					"¡mbito actividad no v·lido");
+			request.getRequestDispatcher("registrarProveedor.jsp").forward(request, response);
+			return;
+		}	
+		
+		String expresionRegularCertificadoMinisterioIndustria= "SÌ|No";
+		Pattern pattern9 = Pattern.compile(expresionRegularCertificadoMinisterioIndustria);
+		Matcher matcher9 = pattern9.matcher(certificadoMinisterioIndustria);
+		if(matcher9.matches()){
+			System.out.println("Certificado Ministerio Industria v·lido");
+		} else{
+			System.out.println("Certificado Ministerio Industria no v·lido");
+			request.setAttribute("mensajeErrorCertificadoMinisterioIndustria", 
+					"Certificado Ministerio Industria no v·lido");
+			request.getRequestDispatcher("registrarProveedor.jsp").forward(request, response);
+			return;
+		}	
+		
+		String expresionRegularEstructuraJuridica= 
+				"Empresa conjunta|Sociedad Limitada|Sociedad AnÛnima";
+		Pattern pattern10 = Pattern.compile(expresionRegularEstructuraJuridica);
+		Matcher matcher10 = pattern10.matcher(estructuraJuridica);
+		if(matcher10.matches()){
+			System.out.println("Estructura jurÌdica v·lida");
+		} else{
+			System.out.println("Estructura jurÌdica no v·lida");
+			request.setAttribute("mensajeErrorEstructuraJuridica", 
+					"Estructura jurÌdica no v·lida");
+			request.getRequestDispatcher("registrarProveedor.jsp").forward(request, response);
+			return;
+		}	
+		
 		// Fin validaciÛn
 		
 		Proveedor nuevoProveedor = new Proveedor(nombreEmpresa, direccion, telefono, 
 				correoElectronico, paginaWeb, nombreRepresentante, telefonoRepresentante, 
-				ambitoActividad, certificadoMinisterioIndustria, estructuraJuridica);
+				ambitoActividad, certificadoMinisterioIndustria, estructuraJuridica, imagenLogo);
 		System.out.println("Vamos a registrar: " + nuevoProveedor.toString());
 		
 		ProveedoresDAO proveedoresDAO = new ProveedoresDAOImpl();

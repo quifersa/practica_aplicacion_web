@@ -121,7 +121,8 @@ public class ServletRegistroCliente extends HttpServlet {
 			return;
 		}
 		
-		String expresionRegularParticularEmpresa = "[PpEe]{1}[a-zA-Z]{5,8}[raRA]{1}";
+		String expresionRegularParticularEmpresa = 
+				"particular|empresa|Empresa|Particular|PARTICULAR|EMPRESA";
 		Pattern pattern8 = Pattern.compile(expresionRegularParticularEmpresa);
 		Matcher matcher8 = pattern8.matcher(particularEmpresa);
 		if(matcher8.matches()){

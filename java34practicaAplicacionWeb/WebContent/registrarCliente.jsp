@@ -28,17 +28,19 @@ Introduce los datos del cliente: <br/>
 <div style="color: red"> ${mensajeErrorParticularEmpresa} </div>
 
 
-<form action="ServletRegistroCliente" method="post">
-Nombre: <input type="text" name="campoNombre"/> <br/>
-Calle: <input type="text" name="campoCalle"/> <br/>
-Número: <input type="text" name="campoNumero"/> <br/>
-Código Postal: <input type="text" name="campoCodigoPostal"/> <br/>
-Población: <input type="text" name="campoPoblacion"/> <br/>
-Teléfono: <input type="text" name="campoTelefono"/> <br/>
-Correo electrónico: <input type="text" name="campoEmail"/> <br/>
-Particular o empresa: <input type="text" name="campoParticularEmpresa"/> <br/>
-<input type="submit" value="REGISTRAR"/>
+<form action="ServletRegistroCliente" method="post" onsubmit="validarFormularioRegistroCliente()">
+	Nombre: <input type="text" name="campoNombre"/> <br/>
+	Calle: <input type="text" name="campoCalle"/> <br/>
+	Número: <input type="text" name="campoNumero"/> <br/>
+	Código Postal: <input type="text" name="campoCodigoPostal"/> <br/>
+	Población: <input type="text" name="campoPoblacion"/> <br/>
+	Teléfono: <input type="text" name="campoTelefono"/> <br/>
+	Correo electrónico: <input type="text" name="campoEmail"/> <br/>
+	Particular o empresa: <input type="text" name="campoParticularEmpresa"/> <br/>
+	<input type="submit" value="REGISTRAR"/>
 </form>
+
+<script type="text/javascript" src="js/validacionRegistrarCliente.js"></script>
 
 </body>
 </html>
